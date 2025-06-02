@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: #0d0d0d;
+    color: #f0f0f0;
+    padding: 50px 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 2.7rem;
+    margin-bottom: 40px;
+    font-weight: 800;
+    color: #ffffff;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-top: 50px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #e0e0e0;
+    border-left: 4px solid #00aaff;
+    padding-left: 12px;
+}
+
+.endpoint {
+    font-weight: 500;
+    background-color: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: "Fira Code", "Courier New", monospace;
+    font-size: 0.95rem;
+    color: #66d9ef;
+    word-break: break-word;
+}
+
+.description {
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #f0f0f0;
+    padding: 8px 16px;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+pre {
+    background-color: #1e1e1e;
+    color: #f8f8f2;
+    padding: 18px;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    border: 1px solid #2b2b2b;
+}
+
+code {
+    font-family: "Fira Code", "Courier New", monospace;
+    font-size: 0.9rem;
+    display: block;
+    white-space: pre;
+}
+
+/* Syntax highlighting */
+code .key {
+    color: #ff79c6;
+}
+
+code .string {
+    color: #f1fa8c;
+}
+
+code .number {
+    color: #bd93f9;
+}
+
+code .boolean {
+    color: #8be9fd;
+}
+
+code .null {
+    color: #6272a4;
+}
+
+/* Scrollbar estética */
+pre::-webkit-scrollbar {
+    height: 8px;
+}
+
+pre::-webkit-scrollbar-track {
+    background: #111;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+}

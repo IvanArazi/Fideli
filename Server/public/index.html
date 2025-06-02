@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Documentación API</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>📘 Documentación de la API</h1>
+
+    <section>
+      <h2>Users</h2>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/users</div>
+        <div class="description">Obtiene la lista de todos los usuarios registrados.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/users</div>
+        <div class="description">Crea un nuevo usuario.</div>
+        <pre><code>{
+  <span class="key">"name"</span>: <span class="string">"Ivan"</span>,
+  <span class="key">"lastName"</span>: <span class="string">"Arazi"</span>,
+  <span class="key">"email"</span>: <span class="string">"ivanarazi2@gmail.com"</span>,
+  <span class="key">"password"</span>: <span class="string">"ivan1234"</span>
+}</code></pre>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/users/auth</div>
+        <div class="description">Autentica al usuario con su correo y contraseña.</div>
+        <pre><code>{
+  <span class="key">"email"</span>: <span class="string">"ivanarazi2@gmail.com"</span>,
+  <span class="key">"password"</span>: <span class="string">"ivan1234"</span>
+}</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Brands</h2>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/brands</div>
+        <div class="description">Obtiene la lista de comercios registrados.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/brands/pending</div>
+        <div class="description">Obtiene la lista de comercios registrados en status 'Pending'.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/brands/approved</div>
+        <div class="description">Obtiene la lista de comercios registrados en status 'Approved'.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/brands/rejected</div>
+        <div class="description">Obtiene la lista de comercios registrados en status 'Rejected'.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/brands/categoryId/:id</div>
+        <div class="description">Obtiene la lista de comercios por categoría.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/brands</div>
+        <div class="description">Crea un nuevo comercio.</div>
+        <pre><code>{
+  <span class="key">"name"</span>: <span class="string">"Cafetería"</span>,
+  <span class="key">"email"</span>: <span class="string">"cafeteria@gmail.com"</span>,
+  <span class="key">"password"</span>: <span class="string">"cafe1234"</span>,
+  <span class="key">"phone"</span>: <span class="number">114934242</span>,
+  <span class="key">"description"</span>: <span class="string">"El mejor cafe"</span>,
+  <span class="key">"address"</span>: <span class="string">"Yatay 200"</span>,
+  <span class="key">"manager"</span>: <span class="string">"Martin"</span>,
+  <span class="key">"category"</span>: <span class="string">"6813d1eb20fa993d653b687f"</span>
+}</code></pre>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/brands/auth</div>
+        <div class="description">Autentica al comercio con su correo y contraseña.</div>
+        <pre><code>{
+  <span class="key">"email"</span>: <span class="string">"cafeteria@gmail.com"</span>,
+  <span class="key">"password"</span>: <span class="string">"cafe1234"</span>
+}</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Categories</h2>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/categories</div>
+        <div class="description">Obtiene la lista de todas las categorías.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/categories</div>
+        <div class="description">Crea una nueva categoría.</div>
+        <pre><code>{
+  <span class="key">"name"</span>: <span class="string">"Cafetería"</span>
+}</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Awards</h2>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/awards</div>
+        <div class="description">Obtiene la lista de todos los premios.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/awards/:id</div>
+        <div class="description">Obtiene un premio por ID.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/awards/brand/:brand</div>
+        <div class="description">Obtiene la lista de todos los premios de un comercio.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/awards</div>
+        <div class="description">Crea un nuevo premio.</div>
+        <pre><code>{
+  <span class="key">"name"</span>: <span class="string">"2x1 en cafe"</span>,
+  <span class="key">"description"</span>: <span class="string">"Lleva dos cafes al precio de uno"</span>,
+  <span class="key">"requiredPoints"</span>: <span class="number">3000</span>
+}</code></pre>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">PUT /api/awards/:id</div>
+        <div class="description">Actualiza un premio por ID.</div>
+        <pre><code>{
+  <span class="key">"name"</span>: <span class="string">"2x1 en cafés"</span>,
+  <span class="key">"description"</span>: <span class="string">"Lleva dos cafés al precio de uno"</span>,
+  <span class="key">"requiredPoints"</span>: <span class="number">3000</span>
+}</code></pre>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">DELETE /api/awards/:id</div>
+        <div class="description">Elimina un premio por ID.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Points</h2>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/points</div>
+        <div class="description">Obtiene una lista de todos los puntos.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/points/user/:id</div>
+        <div class="description">Obtiene una lista de todos los puntos de un usuario.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/points/brand/:id</div>
+        <div class="description">Obtiene una lista de todos los puntos de un comercio.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/points/user/:user/brand/:brand</div>
+        <div class="description">Obtiene los puntos de un usuario en un comercio.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/points/acumulate</div>
+        <div class="description">Acumula puntos a un usuario en un comercio.</div>
+        <pre><code>{
+  <span class="key">"uniqueNumber"</span>: <span class="number">6</span>,
+  <span class="key">"price"</span>: <span class="number">20000</span>
+}</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Redemptions</h2>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/redemptions</div>
+        <div class="description">Obtiene una lista de todos los canjes.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/redemptions/pending</div>
+        <div class="description">Obtiene una lista de todos los canjes pendientes de usar.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/redemptions/used</div>
+        <div class="description">Obtiene una lista de todos los canjes utilizados.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/redemptions/user/:userId</div>
+        <div class="description">Obtiene una lista de todos los canjes de un usuario.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/redemptions/brand/:brandId</div>
+        <div class="description">Obtiene una lista de todos los canjes de un comercio.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/redemptions</div>
+        <div class="description">Crea el canje de un premio.</div>
+        <pre><code>{
+  <span class="key">"awardId"</span>: <span class="string">"68143c5f49a03302a8b36c49"</span>
+}</code></pre>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/redemptions/validation</div>
+        <div class="description">Valida el canje.</div>
+        <pre><code>{
+  <span class="key">"code"</span>: <span class="string">"D3HAZR5N"</span>
+}</code></pre>
+      </div>
+    </section>
+
+    <section>
+      <h2>Admin</h2>
+      <div class="endpoint">
+        <div class="endpoint-title">DELETE /api/admin/user/:id</div>
+        <div class="description">Elimina un usuario.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">DELETE /api/admin/brand/:id</div>
+        <div class="description">Elimina un comercio.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">PUT /api/admin/brand/approved/:id</div>
+        <div class="description">Aprueba un comercio registrado.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">PUT /api/admin/brand/rejected/:id</div>
+        <div class="description">Rechaza un comercio registrado.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Favorites</h2>
+
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/favorites</div>
+        <div class="description">Obtiene una lista de todos los favoritos.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/favorites/user</div>
+        <div class="description">Obtiene una lista de todos los favoritos del usuario logueado.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/favorites/brand</div>
+        <div class="description">Obtiene una lista de todos los favoritos del comercio logueado.</div>
+      </div>
+      
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/favorites</div>
+        <div class="description">Crea un favorito.</div>
+        <pre><code>{
+  <span class="key">"BrandId"</span>: <span class="string">"681684561748e634b6ac88c2"</span>,
+}</code></pre>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-title">DELETE /api/favorites/:id</div>
+        <div class="description">Elimina un favorito.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>History</h2>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/histories</div>
+        <div class="description">Obtiene una lista de todo el historial.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/histories/user/:userId</div>
+        <div class="description">Obtiene una lista de todo el historial del usuario.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/histories/brand/:brandId</div>
+        <div class="description">Obtiene una lista de todo el historial del comercio.</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Events</h2>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/events</div>
+        <div class="description">Obtiene una lista de todos los eventos.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/events/:id</div>
+        <div class="description">Obtiene un evento por ID.</div>
+      </div>
+      <div class="endpoint">
+        <div class="endpoint-title">GET /api/events/brand/:brandId</div>
+        <div class="description">Obtiene una lista de todos los eventos por comercio.</div>
+      </div>
+
+      <div class="endpoint">
+        <div class="endpoint-title">POST /api/events</div>
+        <div class="description">Crea un evento.</div>
+        <pre><code>{
+  <span class="key">"title"</span>: <span class="string">"Dia del Cafe!"</span>,
+  <span class="key">"description"</span>: <span class="string">"Vení a disfrutar en el día del Cafe!"</span>,
+  <span class="key">"location"</span>: <span class="string">"Corrientes 2200"</span>,
+  <span class="key">"hours"</span>: <span class="string">"18:00"</span>,
+  <span class="key">"startDate"</span>: <span class="string">"10/06/2025"</span>,
+  <span class="key">"endDate"</span>: <span class="string">"12/06/2025"</span>
+}</code></pre>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
