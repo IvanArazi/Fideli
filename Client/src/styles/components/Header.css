@@ -1,0 +1,57 @@
+aside {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    padding: 2em;
+    height: 100vh;
+    width: 20%;
+    gap: 4em;
+    background-color: rgb(9, 9, 9);
+}
+
+aside img {
+    width: 100px;
+    height: auto;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu ul {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 4em;
+}
+
+.menu-valor {
+    cursor: pointer;
+    font-weight: normal;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.menu-valor.seleccionado {
+    font-weight: bold;
+    color: #FFB743;
+}
+
+.icono {
+    margin-right: 20px;
+    font-size: 22px;
+    font-weight: normal;
+    color: #fff;
+    transition: color 0.2s, font-weight 0.2s;
+}
+
+.icono.seleccionado {
+    font-weight: bold;
+    color: #FFB743;
+    filter: drop-shadow(0 0 1px #FFB743);
+}

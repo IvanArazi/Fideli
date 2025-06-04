@@ -18,6 +18,7 @@ ul {
     gap: 2em;
     justify-content: center;
     align-items: center;
+    margin: 0;
 }
 
 .li-link {

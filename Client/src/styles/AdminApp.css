@@ -1,16 +1,16 @@
-.user-app {
+.admin-app {
     display: flex;
     height: 100vh;
     width: 100%;
 }
 
-.user-nav p {
+.admin-nav p {
     font-size: 2em;
     font-weight: 700;
     margin: 0;
 }
 
-.user-nav {
+.admin-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,7 +18,7 @@
     width: 100%;
 }
 
-.user-nav button {
+.admin-nav button {
     background: rgb(9, 9, 9);
     color: white;
     border: none;
@@ -29,7 +29,7 @@
     padding: 0.5em 1em;
 }
 
-.user-nav button:hover {
+.admin-nav button:hover {
     color: #FFB743;
     transition: 0.3s ease;
 }

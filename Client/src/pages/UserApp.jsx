@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import logo from "../assets/logo.png";
+import Header from "../components/Header";
+import HomeUser from "../components/HomeUser";
+import Brands from "../components/Brands";
+import Awards from "../components/Awards";
+import Explore from "../components/Explore";
+import "../styles/UserApp.css";
 
 export default function UserApp() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [selected, setSelected] = useState("inicio");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,7 +27,7 @@ export default function UserApp() {
         localStorage.clear();
         navigate("/login");
       } else {
-        setName(decoded.name); // ✅ usamos "name" desde el token
+        setName(decoded.name); // usamos "name" desde el token
       }
     } catch (err) {
       localStorage.clear();
@@ -35,11 +41,47 @@ export default function UserApp() {
     navigate("/login");
   };
 
+
+  const opciones = [
+    { nombre: "Inicio", valor: "inicio", icono: "bi-house" },
+    { nombre: "Comercios", valor: "comercios", icono: "bi-shop" },
+    { nombre: "Tus premios", valor: "premios", icono: "bi-gift" },
+    { nombre: "Explorar", valor: "explorar", icono: "bi-compass" },
+  ];
+
+  // Actualiza el estado cuando seleccionas una opción
+  const handleSelect = (valor) => {
+    setSelected(valor);
+  };
+
+  // Renderiza el componente correspondiente
+  const renderContent = () => {
+    switch (selected) {
+      case "inicio":
+        return <HomeUser />;
+      case "comercios":
+        return <Brands />;
+      case "premios":
+        return <Awards />;
+      case "explorar":
+        return <Explore />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div style={{ backgroundColor:"#ddd", height:"100vh", display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center", gap: "2em", marginBottom: "1rem", width: "100%" }}>
-      <img src={logo} alt="Fideli Logo" style={{ width: "90px", height: "auto" }} />
-      <h1>Hola, {name} 👋</h1>
-      <button onClick={handleLogout}>Cerrar sesión</button>
+    <div className="user-app">
+      <Header opciones={opciones} onSelect={handleSelect} />
+      <div className="main-content">
+        <nav className="user-nav">
+          <p>Hola, {name}! 👋</p>
+          <button onClick={handleLogout}>Cerrar sesión</button>
+        </nav>
+        <div className="content">
+          {renderContent()}
+        </div>
+      </div>
     </div>
   );
 }
