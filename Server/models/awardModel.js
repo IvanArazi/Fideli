@@ -18,7 +18,11 @@ const mySchema = new Schema({
     requiredPoints: {
         type: Number,
         required: true,
-    }
+    },
+    image: {
+        type: String,
+        required: false,
+    },
 });
 
 const Award = mongoose.model('award', mySchema );

@@ -42,7 +42,7 @@ const mySchema = new Schema({
     },
     category: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Categoria',
+        ref: 'category',
         required: true,
     }],
     status: {
@@ -53,6 +53,11 @@ const mySchema = new Schema({
     role: {
         type: String,
         default: "brand",
+    },
+     profileImage: {
+        type: String,
+        default: "",
+        trim: true,
     },
 });
 

@@ -1,6 +1,8 @@
 import express from 'express';
 import {getAllAwards, getAwardsByBrand, createAward, getAwardsById, updateAward, deleteAward} from '../controllers/awardController.js';
 import {validationTokenBrand} from '../middlewares/authBrand.js';
+import uploadAward from "../middlewares/uploadAward.js";
+
 
 const router = express.Router();
 
@@ -8,7 +10,7 @@ const router = express.Router();
 router.get('/', getAllAwards);
 router.get('/brand/:brand', getAwardsByBrand);
 router.get('/:id', getAwardsById);
-router.post('/', validationTokenBrand, createAward);
+router.post('/', validationTokenBrand, uploadAward.single("image"), createAward);
 router.put('/:id', validationTokenBrand, updateAward);
 router.delete('/:id', validationTokenBrand, deleteAward);
 

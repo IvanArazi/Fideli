@@ -1,0 +1,102 @@
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1em;
+}
+
+.brand-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  overflow-y: auto;
+  height: 450px;
+}
+
+.brand-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.brand-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.brand-info {
+  flex-grow: 1;
+}
+
+.brand-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.brand-info p {
+  margin: 0.25rem 0 0;
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.brand-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.brand-actions button {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.brand-actions .approve {
+  background-color: #4caf50;
+  color: white;
+  font-size: 0.5em;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.brand-actions .reject {
+  background-color: #f44336;
+  color: white;
+  font-size: 0.5em;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tabs button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.5em;
+}
+
+.active {
+  background-color: #292929;
+  color: #ffbd43;
+  font-weight: 600;
+}	

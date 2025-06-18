@@ -15,6 +15,7 @@ export default function BrandRegisterWizard() {
     description: "",
     address: "",
     category: "",
+    profileImage: null,
   });
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
@@ -28,7 +29,21 @@ export default function BrandRegisterWizard() {
       .catch(() => setError("Error al cargar categorías"));
   }, []);
 
-  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = e => {
+    if (e.target.name === "profileImage") {
+      const file = e.target.files[0];
+      if (
+        file &&
+        !["image/jpeg", "image/png", "image/jpg"].includes(file.type)
+      ) {
+        setError("Solo se permiten imágenes JPG o PNG");
+        return;
+      }
+      setForm({ ...form, profileImage: file });
+    } else {
+      setForm({ ...form, [e.target.name]: e.target.value });
+    }
+  };
 
   const nextStep = () => {
     if (step === 1 && (!form.name || !form.email || !form.password || !form.confirmPassword)) {
@@ -48,28 +63,27 @@ export default function BrandRegisterWizard() {
     setStep(1);
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    if (!form.manager || !form.phone || !form.description || !form.address || !form.category) {
-      setError("Completá todos los campos");
-      return;
-    }
+const handleSubmit = async e => {
+  e.preventDefault();
+  if (!form.manager || !form.phone || !form.description || !form.address || !form.category || !form.profileImage) {
+    setError("Completá todos los campos y adjuntá una imagen");
+    return;
+  }
 
-    const body = {
-      name: form.name,
-      email: form.email,
-      password: form.password,
-      manager: form.manager,
-      phone: form.phone,
-      description: form.description,
-      address: form.address,
-      category: [form.category],
-    };
+  const body = new FormData();
+    body.append("name", form.name);
+    body.append("email", form.email);
+    body.append("password", form.password);
+    body.append("manager", form.manager);
+    body.append("phone", form.phone);
+    body.append("description", form.description);
+    body.append("address", form.address);
+    body.append("category", form.category);
+    body.append("profileImage", form.profileImage);
 
     const res = await fetch("http://localhost:3000/api/brands", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      body,
     });
 
     const data = await res.json();
@@ -117,6 +131,14 @@ export default function BrandRegisterWizard() {
             <input name="address" placeholder="Ubicación" value={form.address} onChange={handleChange} required />
             <input name="phone" placeholder="Teléfono" value={form.phone} onChange={handleChange} required />
             <textarea name="description" placeholder="Descripción" value={form.description} onChange={handleChange} required />
+            <label htmlFor="">Adjuntar imagen de perfil</label>
+            <input
+              type="file"
+              name="profileImage"
+              accept=".jpg,.jpeg,.png"
+              onChange={e => setForm({ ...form, profileImage: e.target.files[0] })}
+              required
+            />
 
             <div className="step-buttons">
               <button className="back-button" type="button" onClick={prevStep}>Anterior</button>

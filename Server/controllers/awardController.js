@@ -42,31 +42,37 @@ const getAwardsByBrand = async (req, res) => {
 
 const createAward = async (req, res) => {
     try {
-        const { name, description, requiredPoints } = req.body;
+        let { name, description, requiredPoints } = req.body;
         const brandId = req.brandId;
 
+        requiredPoints = Number(requiredPoints);
+
         if (!name || !description || requiredPoints == null) {
-            return res.status(400).send('Todos los campos son obligatorios');
+            return res.status(400).json({msg: 'Todos los campos son obligatorios'});
         }
 
         if (typeof requiredPoints !== 'number' || requiredPoints <= 0) {
-            return res.status(400).send('Los puntos requeridos deben ser un número positivo');
+            return res.status(400).json({msg: 'Los puntos requeridos deben ser un número positivo'});
         }
 
         const integerPoints = Math.floor(requiredPoints); // Asegura que sea entero
+
+        // NUEVO: obtener la imagen si se subió
+        const image = req.file ? `/uploads/awards/${req.file.filename}` : undefined;
 
         const newAward = new Award({
             name,
             brand: brandId,
             description,
             requiredPoints: integerPoints,
+            ...(image && { image }), // solo agrega image si existe
         });
 
         await newAward.save();
         res.status(201).send(newAward);
     }catch (error) {
         console.error(error);
-        res.status(500).send('Error en el servidor');
+        res.status(500).json({ msg: 'Error en el servidor' });
     }
 }
 

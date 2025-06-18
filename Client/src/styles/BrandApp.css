@@ -15,7 +15,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 1em;
-    width: 100%;
+    margin-left: 20%;
+    width: 80%;
 }
 
 .brand-nav button {
@@ -51,4 +52,6 @@
     height: 100%;
     font-size: 2em;
     font-weight: 700;
+    margin-left: 20%;
+    width: 80%;
 }

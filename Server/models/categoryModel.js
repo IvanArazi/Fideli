@@ -6,6 +6,11 @@ const mySchema = new Schema({
         type: String,
         required: true,
     },
+    image: {
+        type: String,
+        default: "",
+        trim: true,
+    },
 });
 
 const Category = mongoose.model('category', mySchema );

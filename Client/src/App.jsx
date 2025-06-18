@@ -7,6 +7,7 @@ import BrandLogin from "./pages/BrandLogin";
 import BrandApp from "./pages/BrandApp";
 import AdminApp from "./pages/AdminApp";
 import Landing from "./pages/Landing";
+import UserBrandProfile from "./pages/UserBrandProfile";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
         <Route path="/brand/app" element={<BrandApp />} />
         <Route path="/admin/app" element={<AdminApp />} />
         <Route path="/landing" element={<Landing />} />
+        <Route path="/brand/:id" element={<UserBrandProfile />} />
+         <Route path="/user/brand/:id" element={<UserBrandProfile />} />
       </Routes>
     </BrowserRouter>
   );

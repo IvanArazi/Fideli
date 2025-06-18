@@ -15,7 +15,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 1em;
-    width: 100%;
+    margin-left: 20%;
+    width: 80%;
 }
 
 .admin-nav button {
@@ -46,9 +47,8 @@
 .content {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    font-size: 2em;
-    font-weight: 700;
+    justify-content: start;
+    align-items: start;
+    margin-left: 20%;
+    width: 80%;
 }

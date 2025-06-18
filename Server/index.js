@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import routerAPI from './routes/index.js';
 import mongoose from 'mongoose';
+import path from "path";
 import cors from 'cors';
 // ...existing code...
 
@@ -17,6 +18,8 @@ app.use(cors());
 app.use(express.json());
 // Middleware para servir archivos estáticos
 app.use(express.static('public'));
+
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 
 app.get('/', (req, res) => {

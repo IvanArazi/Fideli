@@ -23,7 +23,8 @@ export default function UserLogin() {
     if (res.ok) {
       const decoded = jwtDecode(data.token);
       const role = decoded.role;
-
+      
+      localStorage.setItem("userId", decoded.id);
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", role);
 

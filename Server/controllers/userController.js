@@ -77,6 +77,7 @@ const auth = async(req, res) => {
             email: user.email,
             role : user.role,
             name: user.name,
+            uniqueNumber: user.uniqueNumber
         }
         const jwt = jsonwebtoken.sign(data, secret_key, {expiresIn: '1h'});
 

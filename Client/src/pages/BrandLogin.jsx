@@ -23,6 +23,8 @@ export default function BrandLogin() {
     if (res.ok) {
       const decoded = jwtDecode(data.token);
       const role = decoded.role;
+      
+      localStorage.setItem("brandId", decoded.id);
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", role);
       navigate("/brand/app");

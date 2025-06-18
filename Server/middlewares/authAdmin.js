@@ -22,7 +22,7 @@ const validationAdminToken = (req, res, next) => {
         return res.status(403).json({ msg: 'No autorizado: solo admins' });
       }
   
-      req.body.userId = decoded.id;
+      req.userId = decoded.id;
       next();
     });
 
