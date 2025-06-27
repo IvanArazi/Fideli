@@ -11,14 +11,16 @@ Este proyecto es una aplicación web que permite a usuarios acumular puntos en d
 
 ## 🚀 Instrucciones para Ejecutar el Proyecto
 
-### 1. Abrir una terminal y ejecutar:
+### 1. Abrir una terminal y ejecutar el Backend:
 
+```bash
 - cd server
 - npm i
 - npm start
 
-### 2. Abrir otra terminal y ejecutar:
+### 2. Abrir otra terminal y ejecutar el Frontend:
 
+```bash
 - cd client
 - npm i
 - npm run dev
