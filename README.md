@@ -17,7 +17,7 @@ Este proyecto es una aplicación web que permite a usuarios acumular puntos en d
 cd server
 npm i
 npm start
-```bash
+```
 
 ### 2. Abrir otra terminal y ejecutar el Frontend:
 
@@ -25,4 +25,4 @@ npm start
 cd client
 npm i
 npm run dev
-```bash
+```
