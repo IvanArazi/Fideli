@@ -75,22 +75,24 @@ export default function CategoriesAdmin() {
 
   return (
     <div className="categoriesadmin-container">
-      <h2 className="categorie-title">Cargar nueva categoría</h2>
+      <h2 className="categorie-title">Agregar nueva categoría</h2>
       <form className="category-form" onSubmit={handleSubmit}>
-        <input className="input-name"
-          name="name"
-          placeholder="Nombre de la categoría"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="file"
-          name="image"
-          accept=".jpg,.jpeg,.png"
-          onChange={handleChange}
-          required
-        />
+        <div className="form-group">
+          <input className="input-name"
+            name="name"
+            placeholder="Nombre de la categoría"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+          <input className="input-image"
+            type="file"
+            name="image"
+            accept=".jpg,.jpeg,.png"
+            onChange={handleChange}
+            required
+          />
+        </div>
         <button className="create" type="submit">Crear categoría</button>
         {error && <p className="error">{error}</p>}
         {success && <p className="success">{success}</p>}

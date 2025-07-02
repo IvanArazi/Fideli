@@ -57,29 +57,33 @@ console.log("Brand ID:", brandId);
 
         <h2>Agregar nuevo premio</h2>
         <form className="awardsbrand-form" onSubmit={handleSubmit} encType="multipart/form-data">
-        <input
-          name="name"
-          placeholder="Nombre"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          name="requiredPoints"
-          type="number"
-          placeholder="Puntos requeridos"
-          value={form.requiredPoints}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="description"
-          placeholder="Descripción"
-          value={form.description}
-          onChange={handleChange}
-          required
-        />
-        <input type="file" accept="image/*" onChange={handleImageChange} />
+        <div className="awardsbrand-form-inputs">
+          <input
+            name="name"
+            placeholder="Título"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="requiredPoints"
+            type="number"
+            placeholder="Puntos requeridos"
+            value={form.requiredPoints}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="awardsbrand-form-inputs">
+          <textarea
+            name="description"
+            placeholder="Descripción"
+            value={form.description}
+            onChange={handleChange}
+            required
+          />
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+        </div>
         <button type="submit">Agregar premio</button>
         {error && <p className="error-message">{error}</p>}
         {success && <p className="success-message">{success}</p>}

@@ -181,7 +181,7 @@ const validateRedemption = async (req, res) => {
     await Redemption.deleteOne({ _id: redemption._id });
 
     return res.status(200).json({
-      msg: 'Canje validado y registrado correctamente en el historial',
+      msg: 'Canje validado y correctamente. Podés entregar el premio al cliente.',
       award: {
         name: award.name,
         description: award.description,

@@ -8,6 +8,7 @@ import BrandApp from "./pages/BrandApp";
 import AdminApp from "./pages/AdminApp";
 import Landing from "./pages/Landing";
 import UserBrandProfile from "./pages/UserBrandProfile";
+import UserAward from "./pages/UserAward";
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
         <Route path="/admin/app" element={<AdminApp />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/brand/:id" element={<UserBrandProfile />} />
-         <Route path="/user/brand/:id" element={<UserBrandProfile />} />
+        <Route path="/user/brand/:id" element={<UserBrandProfile />} />
+        <Route path="/user/award/:awardId" element={<UserAward />} />
       </Routes>
     </BrowserRouter>
   );

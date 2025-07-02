@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/UserBrandProfile.css";
+import { Link } from "react-router-dom";
 
 export default function UserBrandProfile() {
   const { id } = useParams();
@@ -93,6 +94,12 @@ export default function UserBrandProfile() {
           ) : (
             <div className="userbrandprofile-awards-list">
               {awards.map(award => (
+                <Link
+                  to={`/user/award/${award._id}`}
+                  key={award._id}
+                  className="userbrandprofile-award-link"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
                 <div className="userbrandprofile-award" key={award._id}>
                   <img
                     src={award.image ? `http://localhost:3000${award.image}` : "/default-award.png"}
@@ -106,6 +113,7 @@ export default function UserBrandProfile() {
                     </div>
                   </div>
                 </div>
+                </Link>
               ))}
             </div>
           )}

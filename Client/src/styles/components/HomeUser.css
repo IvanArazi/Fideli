@@ -78,6 +78,7 @@
 }
 
 .brands-list {
+    cursor: pointer;
     display: flex;
     gap: 2rem;
     padding-left: 2em;
