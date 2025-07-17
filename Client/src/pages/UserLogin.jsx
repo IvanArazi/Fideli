@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "../context/AuthContext";
 import logo from "../assets/logo.png";
 import "../styles/UserRegister.css";
 
@@ -8,6 +8,7 @@ export default function UserLogin() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -21,13 +22,9 @@ export default function UserLogin() {
     });
     const data = await res.json();
     if (res.ok) {
-      const decoded = jwtDecode(data.token);
+      login(data.token); // <-- usa el contexto
+      const decoded = JSON.parse(atob(data.token.split('.')[1]));
       const role = decoded.role;
-      
-      localStorage.setItem("userId", decoded.id);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", role);
-
       if (role === "admin") navigate("/admin/app");
       else navigate("/user/app");
     } else {

@@ -9,6 +9,7 @@ import AdminApp from "./pages/AdminApp";
 import Landing from "./pages/Landing";
 import UserBrandProfile from "./pages/UserBrandProfile";
 import UserAward from "./pages/UserAward";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -17,15 +18,59 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/register" element={<UserRegister />} />
         <Route path="/login" element={<UserLogin />} />
-        <Route path="/user/app" element={<UserApp />} />
         <Route path="/brand/register" element={<BrandRegister />} />
         <Route path="/brand/login" element={<BrandLogin />} />
-        <Route path="/brand/app" element={<BrandApp />} />
-        <Route path="/admin/app" element={<AdminApp />} />
         <Route path="/landing" element={<Landing />} />
-        <Route path="/brand/:id" element={<UserBrandProfile />} />
-        <Route path="/user/brand/:id" element={<UserBrandProfile />} />
-        <Route path="/user/award/:awardId" element={<UserAward />} />
+
+        /* Rutas protegidas por rol */
+        <Route
+          path="/user/app"
+          element={
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <UserApp />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/brand/app"
+          element={
+            <ProtectedRoute allowedRoles={["brand"]}>
+              <BrandApp />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/app"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminApp />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/brand/:id"
+          element={
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <UserBrandProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/brand/:id"
+          element={
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <UserBrandProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/award/:awardId"
+          element={
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <UserAward />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "../context/AuthContext";
 import Header from "../components/Header";
 import HomeUser from "../components/HomeUser";
 import Brands from "../components/Brands";
@@ -10,36 +10,8 @@ import "../styles/UserApp.css";
 
 export default function UserApp() {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
+  const { user, logout } = useContext(AuthContext);
   const [selected, setSelected] = useState("inicio");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
-    try {
-      const decoded = jwtDecode(token);
-      if (decoded.exp * 1000 < Date.now()) {
-        // Token expirado
-        localStorage.clear();
-        navigate("/login");
-      } else {
-        setName(decoded.name); // usamos "name" desde el token
-      }
-    } catch (err) {
-      localStorage.clear();
-      navigate("/login");
-    }
-  }, [navigate]);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    navigate("/login");
-  };
 
 
   const opciones = [
@@ -49,12 +21,10 @@ export default function UserApp() {
     { nombre: "Explorar", valor: "explorar", icono: "bi-compass" },
   ];
 
-  // Actualiza el estado cuando seleccionas una opción
   const handleSelect = (valor) => {
     setSelected(valor);
   };
 
-  // Renderiza el componente correspondiente
   const renderContent = () => {
     switch (selected) {
       case "inicio":
@@ -70,12 +40,17 @@ export default function UserApp() {
     }
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <div className="user-app">
       <Header opciones={opciones} onSelect={handleSelect} />
       <div className="main-content">
         <nav className="user-nav">
-          <p>Hola, {name}! 👋</p>
+          <p>Hola, {user?.name || "Usuario"}! 👋</p>
           <button onClick={handleLogout}>Cerrar sesión</button>
         </nav>
         <div className="content">

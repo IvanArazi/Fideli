@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "../context/AuthContext";
 import logo from "../assets/logo.png";
 import "../styles/BrandRegister.css";
 
@@ -8,6 +8,7 @@ export default function BrandLogin() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -21,13 +22,10 @@ export default function BrandLogin() {
     });
     const data = await res.json();
     if (res.ok) {
-      const decoded = jwtDecode(data.token);
-      const role = decoded.role;
-      
-      localStorage.setItem("brandId", decoded.id);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", role);
-      navigate("/brand/app");
+      login(data.token); // <-- usa el contexto
+      const decoded = JSON.parse(atob(data.token.split('.')[1]));
+      if (decoded.role === "brand") navigate("/brand/app");
+      else navigate("/login");
     } else {
       setError(data.msg || "Error en el login");
     }

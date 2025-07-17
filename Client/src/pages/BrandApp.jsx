@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 import "../styles/BrandApp.css";
 import Header from "../components/Header";
 import HomeBrand from "../components/HomeBrand";
@@ -7,49 +8,45 @@ import Analytics from "../components/Analytics";
 import AwardsBrand from "../components/AwardsBrand";
 
 export default function BrandApp() {
-
   const navigate = useNavigate();
-  
-    const handleLogout = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      navigate("/brand/login");
-    };
+  const { user, logout } = useContext(AuthContext);
 
-    const opciones = [
-      { nombre: "Inicio", valor: "inicio", icono: "bi-house" },
-      { nombre: "Analíticas", valor: "analiticas", icono: "bi-bar-chart" },
-      { nombre: "Mis premios", valor: "premios", icono: "bi-gift" },
-    ];
+  const handleLogout = () => {
+    logout();
+    navigate("/brand/login");
+  };
 
-    const [selected, setSelected] = useState("inicio");
-  
-    // Actualiza el estado cuando seleccionas una opción
-    const handleSelect = (valor) => {
-      setSelected(valor);
-    };
-  
-    // Renderiza el componente correspondiente
-    const renderContent = () => {
-      switch (selected) {
-        case "inicio":
-          return <HomeBrand />;
-        case "analiticas":
-          return <Analytics />;
-        case "premios":
-          return <AwardsBrand />;
-        // Si tienes un componente para explorar, agrégalo aquí
-        default:
-          return null;
-      }
-    };
+  const opciones = [
+    { nombre: "Inicio", valor: "inicio", icono: "bi-house" },
+    { nombre: "Analíticas", valor: "analiticas", icono: "bi-bar-chart" },
+    { nombre: "Mis premios", valor: "premios", icono: "bi-gift" },
+  ];
 
-  return(
+  const [selected, setSelected] = useState("inicio");
+
+  const handleSelect = (valor) => {
+    setSelected(valor);
+  };
+
+  const renderContent = () => {
+    switch (selected) {
+      case "inicio":
+        return <HomeBrand />;
+      case "analiticas":
+        return <Analytics />;
+      case "premios":
+        return <AwardsBrand />;
+      default:
+        return null;
+    }
+  };
+
+  return (
     <div className="brand-app">
       <Header opciones={opciones} onSelect={handleSelect} />
       <div className="main-content">
         <nav className="brand-nav">
-          <p>Hola! 👋</p>
+          <p>Hola, {user?.name || "Comercio"}! 👋</p>
           <button onClick={handleLogout}>Cerrar sesión</button>
         </nav>
         <div className="content">
