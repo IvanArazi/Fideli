@@ -4,7 +4,6 @@ import uploadBrand from '../middlewares/uploadBrand.js';
 
 const router = express.Router();
 
-// Rutas para las marcas
 router.get('/', getAllBrands);
 router.get('/pending', getBrandsPending);
 router.get('/approved', getBrandsApproved);

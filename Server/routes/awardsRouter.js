@@ -6,7 +6,6 @@ import uploadAward from "../middlewares/uploadAward.js";
 
 const router = express.Router();
 
-// Rutas para los premios
 router.get('/', getAllAwards);
 router.get('/brand/:brand', getAwardsByBrand);
 router.get('/:id', getAwardsById);

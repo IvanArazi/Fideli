@@ -4,7 +4,7 @@ import { validationToken } from '../middlewares/auth.js';
 import { validationTokenBrand } from '../middlewares/authBrand.js';
 
 const router = express.Router();
-// Rutas de favoritos
+
 router.get('/', getAllFavorites);
 router.get('/user', validationToken, getFavoritesByUserId);
 router.get('/brand', validationTokenBrand, getFavoritesByBrandId);

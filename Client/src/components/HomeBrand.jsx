@@ -108,7 +108,6 @@ export default function HomeBrand() {
         </div>
       )}
 
-      {/* Popup Canjear Premios */}
       {showRedeemPopup && (
         <div className="homebrand-popup-bg">
           <div className="homebrand-popup">

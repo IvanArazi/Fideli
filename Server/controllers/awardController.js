@@ -57,7 +57,7 @@ const createAward = async (req, res) => {
 
         const integerPoints = Math.floor(requiredPoints); // Asegura que sea entero
 
-        // NUEVO: obtener la imagen si se subió
+        // obtener la imagen si se subió
         const image = req.file ? `/uploads/awards/${req.file.filename}` : undefined;
 
         const newAward = new Award({

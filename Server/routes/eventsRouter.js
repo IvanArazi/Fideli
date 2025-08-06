@@ -4,7 +4,6 @@ import {validationTokenBrand} from '../middlewares/authBrand.js';
 
 const router = express.Router();
 
-// Rutas para eventos
 router.get('/', getAllEvents);
 router.get('/brand/:brandId', getAllEventsByBrand);
 router.get('/:id', getEventById);

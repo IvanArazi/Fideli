@@ -12,7 +12,6 @@ export default function UserAward() {
   const [msg, setMsg] = useState("");
   const [redeeming, setRedeeming] = useState(false);
 
-  // Obtener userId del token
   const token = localStorage.getItem("token");
   let userId = null;
   if (token) {
@@ -25,19 +24,17 @@ export default function UserAward() {
     async function fetchData() {
       setLoading(true);
       setMsg("");
-      // Traer info del premio
+      
       const resAward = await fetch(`http://localhost:3000/api/awards/${awardId}`);
       const awardData = await resAward.json();
       setAward(awardData);
       console.log(awardData);
       console.log(awardData.brand._id);
 
-      // Traer info del comercio
       const resBrand = await fetch(`http://localhost:3000/api/brands/${awardData.brand._id}`);
       const brandData = await resBrand.json();
       setBrand(brandData);
-
-      // Traer puntos del usuario en ese comercio
+      
       if (userId) {
         const resPoints = await fetch(`http://localhost:3000/api/points/user/${userId}/brand/${awardData.brand._id}`);
         if (resPoints.ok) {
@@ -50,7 +47,7 @@ export default function UserAward() {
       setLoading(false);
     }
     fetchData();
-    // eslint-disable-next-line
+    
   }, [awardId]);
 
   const handleRedeem = async () => {
@@ -68,7 +65,7 @@ export default function UserAward() {
     setRedeeming(false);
     setMsg(data.msg || "Error al canjear");
     if (res.ok) {
-      // Actualizar puntos
+      
       setUserPoints(userPoints - award.requiredPoints);
     }
   };

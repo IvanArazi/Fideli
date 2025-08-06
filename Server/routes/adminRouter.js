@@ -4,7 +4,6 @@ import { validationAdminToken } from '../middlewares/authAdmin.js';
 
 const router = express.Router();
 
-// Rutas para el admin
 router.delete('/user/:id', validationAdminToken, deleteUser);
 router.delete('/brand/:id', validationAdminToken, deleteBrand);
 router.put('/brand/approved/:id', validationAdminToken, approvedBrand);

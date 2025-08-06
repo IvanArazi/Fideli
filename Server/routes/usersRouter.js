@@ -4,7 +4,6 @@ import { validationToken } from '../middlewares/auth.js';
 
 const router = express.Router();
 
-// Rutas para los usuarios
 router.get('/', getAllUsers);
 router.post('/', createUser);
 router.post('/auth', auth);

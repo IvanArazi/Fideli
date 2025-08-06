@@ -70,7 +70,6 @@ export default function UserBrandProfile() {
 
       <p>{brand.description}</p>
 
-      {/* Tabs */}
       <div className="userbrandprofile-tabs">
         <button
           className={activeTab === "premios" ? "active" : ""}
@@ -86,7 +85,6 @@ export default function UserBrandProfile() {
         </button>
       </div>
 
-      {/* Tab content */}
       {activeTab === "premios" && (
         <>
           {awards.length === 0 ? (

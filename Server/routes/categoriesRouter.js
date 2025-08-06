@@ -5,7 +5,6 @@ import uploadCategory from '../middlewares/uploadCategory.js';
 
 const router = express.Router();
 
-// Rutas para las categorías
 router.get('/', getAllCategories);
 router.post('/', validationAdminToken, uploadCategory.single("image"), createCategory);
 router.delete('/:id', validationAdminToken, deleteCategory);

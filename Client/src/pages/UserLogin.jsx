@@ -22,7 +22,7 @@ export default function UserLogin() {
     });
     const data = await res.json();
     if (res.ok) {
-      login(data.token); // <-- usa el contexto
+      login(data.token); 
       const decoded = JSON.parse(atob(data.token.split('.')[1]));
       const role = decoded.role;
       if (role === "admin") navigate("/admin/app");

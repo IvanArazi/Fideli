@@ -4,9 +4,6 @@ import routerAPI from './routes/index.js';
 import mongoose from 'mongoose';
 import path from "path";
 import cors from 'cors';
-// ...existing code...
-
-// ...existing code...
 
 dotenv.config();
 const app = express();
@@ -14,9 +11,7 @@ const port = process.env.PORT;
 const dburi = process.env.MONGODB_URI;
 
 app.use(cors());
-// middleware
 app.use(express.json());
-// Middleware para servir archivos estáticos
 app.use(express.static('public'));
 
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));

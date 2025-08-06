@@ -3,7 +3,6 @@ import { getAllHistory, getHistoriesByUserId, getHistoriesByBrandId } from '../c
 
 const router = express.Router();
 
-// Rutas del historial
 router.get('/', getAllHistory);
 router.get('/user/:userId', getHistoriesByUserId);
 router.get('/brand/:brandId', getHistoriesByBrandId);

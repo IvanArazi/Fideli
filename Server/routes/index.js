@@ -11,7 +11,7 @@ import favoritesRouter from './favoritesRouter.js';
 import eventsRouter from './eventsRouter.js';
 
 function routerAPI(app){
-    // Definir cada ruta
+    
     app.use('/api/users', usersRouter);
     app.use('/api/brands', brandsRouter);
     app.use('/api/categories', categoriesRouter);

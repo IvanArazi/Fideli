@@ -4,9 +4,6 @@
   align-items: center;
   justify-content: center;
   background-color:rgba(0, 0, 0, 0.092);
-  background-image:
-  radial-gradient(at 0% 0%, hsla(0, 0%, 100%, 0.621) 0px, transparent 50%),
-  radial-gradient(at 100% 100%, hsla(50,100%,39%,0.54) 0px, transparent 50%);
 }
 
 .user-register-form img {
