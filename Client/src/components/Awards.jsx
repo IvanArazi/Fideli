@@ -7,6 +7,7 @@ export default function Awards() {
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(null);
   const [msg, setMsg] = useState("");
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,7 +22,7 @@ export default function Awards() {
       setLoading(false);
       return;
     }
-    fetch(`http://localhost:3000/api/redemptions/user/${userId}`)
+    fetch(`${API_URL}/api/redemptions/user/${userId}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {

@@ -13,16 +13,17 @@ export default function UserBrandProfile() {
   const [activeTab, setActiveTab] = useState("premios");
 
   const userId = localStorage.getItem("userId");
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/brands/${id}`)
+    fetch(`${API_URL}/api/brands/${id}`)
       .then(res => res.json())
       .then(data => setBrand(data))
       .catch(() => setError("Error al cargar el comercio"));
   }, [id]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/awards/brand/${id}`)
+    fetch(`${API_URL}/api/awards/brand/${id}`)
       .then(res => res.json())
       .then(data => setAwards(Array.isArray(data) ? data : []))
       .catch(() => setAwards([]));
@@ -30,7 +31,7 @@ export default function UserBrandProfile() {
 
   useEffect(() => {
     if (!userId) return;
-    fetch(`http://localhost:3000/api/points/user/${userId}/brand/${id}`)
+    fetch(`${API_URL}/api/points/user/${userId}/brand/${id}`)
       .then(res => res.json())
       .then(data => {
         setPoints(Array.isArray(data) && data[0]?.points ? data[0].points : 0);
@@ -53,7 +54,7 @@ export default function UserBrandProfile() {
       <div className="userbrandprofile-header">
         <div className="userbrandprofile-info-container">
           <img
-            src={brand.profileImage ? `http://localhost:3000${brand.profileImage}` : "/default-profile.png"}
+            src={brand.profileImage ? `${API_URL}${brand.profileImage}` : "/default-profile.png"}
             alt={brand.name}
             className="userbrandprofile-img"
           />
@@ -100,7 +101,7 @@ export default function UserBrandProfile() {
                 >
                 <div className="userbrandprofile-award" key={award._id}>
                   <img
-                    src={award.image ? `http://localhost:3000${award.image}` : "/default-award.png"}
+                    src={award.image ? `${API_URL}${award.image}` : "/default-award.png"}
                     alt={award.name}
                     className="userbrandprofile-award-img"
                   />

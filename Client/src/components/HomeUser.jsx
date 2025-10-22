@@ -3,22 +3,24 @@ import { useNavigate } from "react-router-dom";
 import "../styles/components/HomeUser.css";
 import { jwtDecode } from "jwt-decode";
 
-export default function HomeUser() {
+export default function HomeUser({ onCategoryClick }) {
   const [brands, setBrands] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [uniqueNumber, setUniqueNumber] = useState("");
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
-        fetch("http://localhost:3000/api/brands/approved")
+        fetch(`${API_URL}/api/brands/approved`)
             .then(res => res.json())
             .then(data => setBrands(data))
             .catch(() => setError("Error al cargar los comercios"));
     }, []);
 
     useEffect(() => {
-      fetch("http://localhost:3000/api/categories")
+      fetch(`${API_URL}/api/categories`)
         .then(res => res.json())
         .then(data => setCategories(data))
         .catch(() => setCategories([]));
@@ -57,7 +59,7 @@ export default function HomeUser() {
             onClick={() => navigate(`/brand/${brand._id}`)}
           >
             <img
-              src={brand.profileImage ? `http://localhost:3000${brand.profileImage}` : "/default-profile.png"}
+              src={brand.profileImage ? `${API_URL}${brand.profileImage}` : "/default-profile.png"}
               alt={brand.name}
             />
           </div>
@@ -69,10 +71,15 @@ export default function HomeUser() {
       <div className="categories-list">
         {categories.map(cat => (
           <div className="category-card" key={cat._id}>
-            <img
-              src={cat.image ? `http://localhost:3000${cat.image}` : "/default-category.png"}
-              alt={cat.name}
-            />
+            <button
+               key={cat._id}
+              onClick={() => onCategoryClick && onCategoryClick(cat._id)}
+            >
+              <img
+                src={cat.image ? `${API_URL}${cat.image}` : "/default-category.png"}
+                alt={cat.name}
+              />
+            </button>
             <p className="categoryname">{cat.name}</p>
           </div>
         ))}

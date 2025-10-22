@@ -50,7 +50,7 @@ export default function AdminApp() {
       <Header opciones={opciones} onSelect={handleSelect} />
       <div className="main-content">
         <nav className="admin-nav">
-          <p>Hola Admin! 👋</p>
+          <p>¡Hola, Admin!</p>
           <button onClick={handleLogout}>Cerrar sesión</button>
         </nav>
         <div className="content">

@@ -13,7 +13,7 @@ export default function UserRegister() {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async e => {
@@ -33,7 +33,7 @@ export default function UserRegister() {
       email: form.email,
       password: form.password,
     };
-    const res = await fetch("http://localhost:3000/api/users", {
+    const res = await fetch(`${API_URL}/api/users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),

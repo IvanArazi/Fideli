@@ -8,11 +8,13 @@ export default function AwardsBrand() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const brandId = localStorage.getItem("brandId");
-console.log("Brand ID:", brandId);
+  console.log("Brand ID:", brandId);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/awards/brand/${brandId}`)
+    fetch(`${API_URL}/api/awards/brand/${brandId}`)
       .then(res => res.json())
       .then(data => setAwards(Array.isArray(data) ? data : []))
       .catch(() => setAwards([]));
@@ -37,7 +39,7 @@ console.log("Brand ID:", brandId);
     if (image) formData.append("image", image);
 
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:3000/api/awards", {
+    const res = await fetch(`${API_URL}/api/awards`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: formData,

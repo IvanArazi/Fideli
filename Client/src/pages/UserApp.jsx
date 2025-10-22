@@ -12,6 +12,7 @@ export default function UserApp() {
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
   const [selected, setSelected] = useState("inicio");
+  const [categoryFilter, setCategoryFilter] = useState(null);
 
 
   const opciones = [
@@ -25,12 +26,18 @@ export default function UserApp() {
     setSelected(valor);
   };
 
+  // Función para HomeUser para filtrar por categoría
+  const handleCategoryFromHome = (catId) => {
+    setCategoryFilter(catId);
+    setSelected("comercios");
+  };
+
   const renderContent = () => {
     switch (selected) {
       case "inicio":
-        return <HomeUser />;
+        return <HomeUser onCategoryClick={handleCategoryFromHome}/>;
       case "comercios":
-        return <Brands />;
+        return <Brands initialCategory={categoryFilter}/>;
       case "premios":
         return <Awards />;
       case "explorar":
@@ -50,7 +57,7 @@ export default function UserApp() {
       <Header opciones={opciones} onSelect={handleSelect} />
       <div className="main-content">
         <nav className="user-nav">
-          <p>Hola, {user?.name || "Usuario"}! 👋</p>
+          <p>¡Hola, {user?.name || "Usuario"}!</p>
           <button onClick={handleLogout}>Cerrar sesión</button>
         </nav>
         <div className="content">

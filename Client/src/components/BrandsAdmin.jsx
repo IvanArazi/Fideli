@@ -7,6 +7,8 @@ export default function BrandsAdmin() {
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     fetchBrands(activeTab);
   }, [activeTab]);
@@ -14,7 +16,7 @@ export default function BrandsAdmin() {
   const fetchBrands = async (tab) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3000/api/brands/${tab}`);
+      const res = await fetch(`${API_URL}/api/brands/${tab}`);
       const data = await res.json();
 
       if (res.ok && Array.isArray(data)) {
@@ -31,7 +33,7 @@ export default function BrandsAdmin() {
 
   const handleAction = async (id, action) => {
     try {
-      const res = await fetch(`http://localhost:3000/api/admin/brand/${action}/${id}`, {
+      const res = await fetch(`${API_URL}/api/admin/brand/${action}/${id}`, {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${localStorage.getItem("token")}`,
@@ -73,7 +75,7 @@ export default function BrandsAdmin() {
                 style={{ textDecoration: "none", color: "inherit" }}
               >
                 <div className="brand-card">
-                  <img src={brand.profileImage ? `http://localhost:3000${brand.profileImage}` : "/default-logo.png"} alt={brand.name} />
+                  <img src={brand.profileImage ? `${API_URL}${brand.profileImage}` : "/default-logo.png"} alt={brand.name} />
                   <div className="brand-info">
                     <h3>{brand.name}</h3>
                     {brand.category.map(cat => (<p key={cat._id}>{cat.name}</p>))}

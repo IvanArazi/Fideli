@@ -13,12 +13,14 @@ export default function HomeBrand() {
   const [redeemMsg, setRedeemMsg] = useState("");
   const [redeemLoading, setRedeemLoading] = useState(false);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleAcumulate = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMsg("");
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:3000/api/points/acumulate", {
+    const res = await fetch(`${API_URL}/api/points/acumulate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +45,7 @@ export default function HomeBrand() {
     setRedeemLoading(true);
     setRedeemMsg("");
     const token = localStorage.getItem("token");
-    const res = await fetch("http://localhost:3000/api/redemptions/validation", {
+    const res = await fetch(`${API_URL}/api/redemptions/validation`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

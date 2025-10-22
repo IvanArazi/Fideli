@@ -15,7 +15,8 @@ export default function BrandLogin() {
   const handleSubmit = async e => {
     e.preventDefault();
     setError("");
-    const res = await fetch("http://localhost:3000/api/brands/auth", {
+    const API_URL = import.meta.env.VITE_API_URL;
+    const res = await fetch(`${API_URL}/api/brands/auth`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),

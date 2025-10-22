@@ -12,6 +12,8 @@ export default function UserAward() {
   const [msg, setMsg] = useState("");
   const [redeeming, setRedeeming] = useState(false);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const token = localStorage.getItem("token");
   let userId = null;
   if (token) {
@@ -24,19 +26,19 @@ export default function UserAward() {
     async function fetchData() {
       setLoading(true);
       setMsg("");
-      
-      const resAward = await fetch(`http://localhost:3000/api/awards/${awardId}`);
+
+      const resAward = await fetch(`${API_URL}/api/awards/${awardId}`);
       const awardData = await resAward.json();
       setAward(awardData);
       console.log(awardData);
       console.log(awardData.brand._id);
 
-      const resBrand = await fetch(`http://localhost:3000/api/brands/${awardData.brand._id}`);
+      const resBrand = await fetch(`${API_URL}/api/brands/${awardData.brand._id}`);
       const brandData = await resBrand.json();
       setBrand(brandData);
       
       if (userId) {
-        const resPoints = await fetch(`http://localhost:3000/api/points/user/${userId}/brand/${awardData.brand._id}`);
+        const resPoints = await fetch(`${API_URL}/api/points/user/${userId}/brand/${awardData.brand._id}`);
         if (resPoints.ok) {
         const pointsData = await resPoints.json();
         setUserPoints(Array.isArray(pointsData) && pointsData[0]?.points ? pointsData[0].points : 0);
@@ -53,7 +55,7 @@ export default function UserAward() {
   const handleRedeem = async () => {
     setRedeeming(true);
     setMsg("");
-    const res = await fetch("http://localhost:3000/api/redemptions/", {
+    const res = await fetch(`${API_URL}/api/redemptions/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

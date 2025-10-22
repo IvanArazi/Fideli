@@ -46,7 +46,7 @@ export default function BrandApp() {
       <Header opciones={opciones} onSelect={handleSelect} />
       <div className="main-content">
         <nav className="brand-nav">
-          <p>Hola, {user?.name || "Comercio"}! 👋</p>
+          <p>¡Hola, {user?.name || "Comercio"}!</p>
           <button onClick={handleLogout}>Cerrar sesión</button>
         </nav>
         <div className="content">

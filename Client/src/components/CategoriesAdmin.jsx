@@ -7,8 +7,10 @@ export default function CategoriesAdmin() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
-    fetch("http://localhost:3000/api/categories")
+    fetch(`${API_URL}/api/categories`)
       .then(res => res.json())
       .then(data => setCategories(data))
       .catch(() => setError("Error al cargar categorías"));
@@ -34,7 +36,7 @@ export default function CategoriesAdmin() {
     body.append("name", form.name);
     body.append("image", form.image);
 
-    const res = await fetch("http://localhost:3000/api/categories", {
+    const res = await fetch(`${API_URL}/api/categories`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -55,7 +57,7 @@ export default function CategoriesAdmin() {
     setError("");
     setSuccess("");
     try {
-      const res = await fetch(`http://localhost:3000/api/categories/${id}`, {
+      const res = await fetch(`${API_URL}/api/categories/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -102,7 +104,7 @@ export default function CategoriesAdmin() {
         {categories.map(cat => (
           <div className="category-row" key={cat._id}>
             <img
-              src={cat.image ? `http://localhost:3000${cat.image}` : "/default-category.png"}
+              src={cat.image ? `${API_URL}${cat.image}` : "/default-category.png"}
               alt={cat.name}
               className="category-img"
             />

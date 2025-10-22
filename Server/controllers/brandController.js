@@ -33,7 +33,7 @@ const getBrandById = async (req, res) => {
 const getBrandsByCategoryId = async (req, res) => {
     try {
         const categoryId = req.params.id;
-        const brands = await Brand.find({category: categoryId});
+        const brands = await Brand.find({category: categoryId, status: "approved"});
         if (brands.length === 0) {
             return res.status(404).json({msg: "No hay comercios para esta categoria"});
         }

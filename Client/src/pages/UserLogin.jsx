@@ -9,13 +9,14 @@ export default function UserLogin() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async e => {
     e.preventDefault();
     setError("");
-    const res = await fetch("http://localhost:3000/api/users/auth", {
+    const res = await fetch(`${API_URL}/api/users/auth`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),

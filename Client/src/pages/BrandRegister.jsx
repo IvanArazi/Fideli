@@ -23,7 +23,8 @@ export default function BrandRegisterWizard() {
 
   // Cargar categorías
   useEffect(() => {
-    fetch("http://localhost:3000/api/categories")
+    const API_URL = import.meta.env.VITE_API_URL;
+    fetch(`${API_URL}/api/categories`)
       .then(res => res.json())
       .then(data => setCategories(data))
       .catch(() => setError("Error al cargar categorías"));
@@ -81,7 +82,8 @@ const handleSubmit = async e => {
     body.append("category", form.category);
     body.append("profileImage", form.profileImage);
 
-    const res = await fetch("http://localhost:3000/api/brands", {
+    const API_URL = import.meta.env.VITE_API_URL;
+    const res = await fetch(`${API_URL}/api/brands`, {
       method: "POST",
       body,
     });
