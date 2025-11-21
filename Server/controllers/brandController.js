@@ -124,3 +124,39 @@ const auth = async (req, res) => {
 }
 
 export { getAllBrands, getBrandById, getBrandsByCategoryId, createBrand, auth, getBrandsPending, getBrandsApproved, getBrandsRejected };
+
+// Perfil propio de comercio
+const getMe = async (req, res) => {
+    try {
+        const brand = await Brand.findById(req.brandId).populate('category');
+        if (!brand) return res.status(404).json({ msg: 'Comercio no encontrado' });
+        res.json(brand);
+    } catch (error) {
+        return res.status(500).json({ msg: 'Error en el servidor' });
+    }
+};
+
+const updateMe = async (req, res) => {
+    try {
+        const updates = {};
+        const allowed = ['name','email','phone','description','address','manager','category','status'];
+        for (const k of allowed) if (req.body[k] !== undefined) updates[k] = req.body[k];
+        if (req.file) {
+            updates.profileImage = `/uploads/brands/${req.file.filename}`;
+        }
+        if (req.body.password) {
+            const hash = await bcrypt.hash(req.body.password, salt);
+            updates.password = hash;
+        }
+        const brand = await Brand.findByIdAndUpdate(req.brandId, updates, { new: true, runValidators: true }).populate('category');
+        if (!brand) return res.status(404).json({ msg: 'Comercio no encontrado' });
+        res.json(brand);
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).json({ msg: 'El correo ya está registrado' });
+        }
+        return res.status(500).json({ msg: 'Error en el servidor' });
+    }
+};
+
+export { getMe as getMeBrand, updateMe as updateMeBrand };

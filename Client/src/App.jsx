@@ -9,6 +9,10 @@ import AdminApp from "./pages/AdminApp";
 import Landing from "./pages/Landing";
 import UserBrandProfile from "./pages/UserBrandProfile";
 import UserAward from "./pages/UserAward";
+import ExploreAwards from "./pages/ExploreAwards";
+import ExploreEvents from "./pages/ExploreEvents";
+import UserProfile from "./pages/UserProfile";
+import BrandProfile from "./pages/BrandProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -36,6 +40,22 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["brand"]}>
               <BrandApp />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user/profile"
+          element={
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/brand/profile"
+          element={
+            <ProtectedRoute allowedRoles={["brand"]}>
+              <BrandProfile />
             </ProtectedRoute>
           }
         />
@@ -70,6 +90,20 @@ function App() {
               <UserAward />
             </ProtectedRoute>
           }
+        />        <Route
+          path="/user/explore"
+          element={
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <ExploreAwards />
+            </ProtectedRoute>
+          }
+        />        <Route
+          path="/user/events"
+          element={
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <ExploreEvents />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </BrowserRouter>
@@ -77,3 +111,7 @@ function App() {
 }
 
 export default App;
+
+
+
+

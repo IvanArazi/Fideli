@@ -1,0 +1,27 @@
+.expevents-page { padding: 1rem 1.25rem; max-width: 1200px; margin: 0 auto; }
+.ee-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.ee-header h2 { margin:0; font-size:1.15rem; font-weight:800; }
+.ee-back { width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; border:1px solid #e5e7eb; background:#fff; cursor:pointer; }
+.ee-back:hover { border-color:#ffbd43; }
+.ee-loading { padding: 1rem; }
+.ee-msg { color:#374151; padding:.5rem 0; }
+.ee-msg.error { color:#b91c1c; }
+.ee-grid { display:grid; gap:14px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.ee-card { text-align:left; background:#fff; border:1px solid #eee; border-radius:14px; overflow:hidden; cursor:pointer; padding:12px; display:flex; flex-direction:column; transition: transform .15s ease, box-shadow .15s ease; }
+.ee-card:hover { transform: translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.08); }
+.ee-info .title { font-weight:800; color:#111827; margin-bottom:6px; }
+.ee-info .meta { display:flex; align-items:center; gap:8px; color:#6b7280; font-size:.9rem; margin-bottom:6px; }
+.ee-info .location { color:#374151; font-size:.95rem; }
+
+/* Modal */
+.ee-modal-bg { position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:center; justify-content:center; z-index:2000; padding: 1rem; }
+.ee-modal { background:#fff; border-radius:16px; max-width:640px; width:100%; padding: 1rem 1.25rem; position:relative; }
+.ee-close { position:absolute; top:10px; right:10px; border:none; background:#f3f4f6; border-radius:10px; width:32px; height:32px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+.ee-modal-title { margin:0 0 8px; font-size:1.2rem; font-weight:800; }
+.ee-modal-meta { display:grid; gap:6px; margin-bottom:10px; color:#374151; }
+.ee-modal-desc { margin:0; color:#111827; line-height:1.4; }
+
+@media (max-width: 480px) {
+  .ee-grid { grid-template-columns: 1fr; }
+}
+

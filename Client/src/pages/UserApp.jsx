@@ -10,7 +10,7 @@ import "../styles/UserApp.css";
 
 export default function UserApp() {
   const navigate = useNavigate();
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [selected, setSelected] = useState("inicio");
   const [categoryFilter, setCategoryFilter] = useState(null);
 
@@ -47,9 +47,8 @@ export default function UserApp() {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  const gotoProfile = () => {
+    navigate("/user/profile");
   };
 
   return (
@@ -58,7 +57,9 @@ export default function UserApp() {
       <div className="main-content">
         <nav className="user-nav">
           <p>¡Hola, {user?.name || "Usuario"}!</p>
-          <button onClick={handleLogout}>Cerrar sesión</button>
+          <button aria-label="Editar perfil" title="Editar perfil" onClick={gotoProfile}>
+            <i className="bi bi-gear"></i>
+          </button>
         </nav>
         <div className="content">
           {renderContent()}
@@ -67,3 +68,4 @@ export default function UserApp() {
     </div>
   );
 }
+

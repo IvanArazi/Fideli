@@ -34,6 +34,11 @@ const mySchema = new Schema({
         type: String,
         enum: ['admin', 'user'],
         default: 'user'
+    },
+    profileImage: {
+        type: String,
+        default: "",
+        trim: true,
     }
 });
 

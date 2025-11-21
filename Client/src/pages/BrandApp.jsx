@@ -9,11 +9,10 @@ import AwardsBrand from "../components/AwardsBrand";
 
 export default function BrandApp() {
   const navigate = useNavigate();
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/brand/login");
+  const gotoProfile = () => {
+    navigate("/brand/profile");
   };
 
   const opciones = [
@@ -47,7 +46,9 @@ export default function BrandApp() {
       <div className="main-content">
         <nav className="brand-nav">
           <p>¡Hola, {user?.name || "Comercio"}!</p>
-          <button onClick={handleLogout}>Cerrar sesión</button>
+          <button aria-label="Editar perfil" title="Editar perfil" onClick={gotoProfile}>
+            <i className="bi bi-gear"></i>
+          </button>
         </nav>
         <div className="content">
           {renderContent()}

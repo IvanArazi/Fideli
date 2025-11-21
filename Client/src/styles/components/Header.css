@@ -1,6 +1,8 @@
 aside {
     display: flex;
     position: fixed;
+    top: 0;
+    left: 0;
     flex-direction: column;
     align-items: start;
     justify-content: start;
@@ -9,6 +11,7 @@ aside {
     width: 20%;
     gap: 4em;
     background-color: rgb(9, 9, 9);
+    z-index: 1000;
 }
 
 aside img {
@@ -55,4 +58,53 @@ aside img {
     font-weight: bold;
     color: #FFB743;
     filter: drop-shadow(0 0 1px #FFB743);
+}
+
+/* Responsive: bottom navbar on small screens */
+@media (max-width: 768px) {
+    aside {
+        top: auto;
+        bottom: 0;
+        height: 64px;
+        width: 100%;
+        padding: 0.5em 1em;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+    }
+
+    aside img {
+        display: none;
+    }
+
+    .menu {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .menu ul {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 0.5em;
+    }
+
+    .menu-valor {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+    }
+
+    .menu-valor .label {
+        margin-top: 4px;
+    }
+
+    .icono {
+        margin-right: 0;
+        font-size: 20px;
+    }
 }

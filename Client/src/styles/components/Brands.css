@@ -1,10 +1,15 @@
 .brands2-container {
-  max-width: 700px;
-  margin: 2rem auto;
-  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 900px;
+  margin: 1rem auto;
+  padding: 1rem;
   background: #fff;
   border-radius: 14px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  min-height: 0; /* allow child to control scroll */
 }
 .brands-filters {
   display: flex;
@@ -41,6 +46,10 @@
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 84px; /* space for bottom navbar in mobile */
 }
 .brands2-item {
   display: flex;
@@ -51,6 +60,7 @@
   padding: 1rem;
   border: 1px solid #eee;
 }
+.brands2-item:hover { box-shadow: 0 6px 18px rgba(0,0,0,.06); }
 .brands2-img {
   width: 70px;
   height: 70px;
@@ -65,4 +75,9 @@
   color: #292929;
   margin: 0.5rem 0;
   font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .brands2-container { padding: 0.75rem; margin: 0.5rem auto; box-shadow: none; border-radius: 10px; }
+  .brands2-item { padding: 0.75rem; }
 }

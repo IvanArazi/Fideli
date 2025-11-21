@@ -18,6 +18,18 @@ export default function HomeUser({ onCategoryClick }) {
             .then(data => setBrands(data))
             .catch(() => setError("Error al cargar los comercios"));
     }, []);
+    useEffect(() => {
+      const elExplore = document.querySelector('.explore-awards');
+      const elEvents = document.querySelector('.next-events');
+      const goExplore = () => navigate('/user/explore');
+      const goEvents = () => navigate('/user/events');
+      if (elExplore) elExplore.addEventListener('click', goExplore);
+      if (elEvents) elEvents.addEventListener('click', goEvents);
+      return () => {
+        if (elExplore) elExplore.removeEventListener('click', goExplore);
+        if (elEvents) elEvents.removeEventListener('click', goEvents);
+      }
+    }, [navigate]);
 
     useEffect(() => {
       fetch(`${API_URL}/api/categories`)
@@ -33,6 +45,14 @@ export default function HomeUser({ onCategoryClick }) {
         setUniqueNumber(decoded.uniqueNumber);
       }
     }, []);
+
+    useEffect(() => {
+      const el = document.querySelector('.explore-awards');
+      if (!el) return;
+      const handler = () => navigate('/user/explore');
+      el.addEventListener('click', handler);
+      return () => el.removeEventListener('click', handler);
+    }, [navigate]);
 
   return (
     <div className="home-user-container">
@@ -91,3 +111,4 @@ export default function HomeUser({ onCategoryClick }) {
     </div>
   );
 }
+

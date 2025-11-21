@@ -67,3 +67,37 @@ const createEvent = async (req, res) => {
 }
 
 export { getAllEvents, getAllEventsByBrand, createEvent, getEventById };
+
+const updateEvent = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updates = {};
+        const allowed = ['title','location','description','hours','startDate','endDate'];
+        for (const k of allowed) if (req.body[k] !== undefined) updates[k] = req.body[k];
+        const ev = await Event.findById(id);
+        if (!ev) return res.status(404).json({ msg: 'Evento no encontrado' });
+        if (String(ev.brandId) !== String(req.brandId)) return res.status(403).json({ msg: 'No autorizado' });
+        if (updates.startDate && updates.endDate && new Date(updates.endDate) < new Date(updates.startDate)) {
+            return res.status(400).json({ msg: 'La fecha de fin no puede ser anterior a la de inicio' });
+        }
+        const updated = await Event.findByIdAndUpdate(id, updates, { new: true, runValidators: true });
+        res.json(updated);
+    } catch (error) {
+        res.status(500).json({ msg: 'Error interno del servidor' });
+    }
+};
+
+const deleteEvent = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const ev = await Event.findById(id);
+        if (!ev) return res.status(404).json({ msg: 'Evento no encontrado' });
+        if (String(ev.brandId) !== String(req.brandId)) return res.status(403).json({ msg: 'No autorizado' });
+        await Event.findByIdAndDelete(id);
+        res.json({ msg: 'Evento eliminado' });
+    } catch (error) {
+        res.status(500).json({ msg: 'Error interno del servidor' });
+    }
+};
+
+export { updateEvent, deleteEvent };

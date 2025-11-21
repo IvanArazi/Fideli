@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+﻿import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/UserBrandProfile.css";
 import { Link } from "react-router-dom";
@@ -11,6 +11,8 @@ export default function UserBrandProfile() {
   const [error, setError] = useState("");
   const [points, setPoints] = useState(0);
   const [activeTab, setActiveTab] = useState("premios");
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const userId = localStorage.getItem("userId");
   const API_URL = import.meta.env.VITE_API_URL;
@@ -23,10 +25,24 @@ export default function UserBrandProfile() {
   }, [id]);
 
   useEffect(() => {
+    fetch(`${API_URL}/api/events/brand/${id}`)
+      .then(res => res.ok ? res.json() : [])
+      .then(data => setEvents(Array.isArray(data) ? data : []))
+      .catch(() => setEvents([]));
+  }, [id]);
+
+  useEffect(() => {
     fetch(`${API_URL}/api/awards/brand/${id}`)
       .then(res => res.json())
       .then(data => setAwards(Array.isArray(data) ? data : []))
       .catch(() => setAwards([]));
+  }, [id]);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/events/brand/${id}`)
+      .then(res => res.ok ? res.json() : [])
+      .then(data => setEvents(Array.isArray(data) ? data : []))
+      .catch(() => setEvents([]));
   }, [id]);
 
   useEffect(() => {
@@ -120,10 +136,43 @@ export default function UserBrandProfile() {
       )}
 
       {activeTab === "eventos" && (
-        <div className="userbrandprofile-events-empty">
-          <p>Este comercio no tiene eventos cargados aún.</p>
+        events.length === 0 ? (
+          <div className="userbrandprofile-events-empty">
+            <p>Este comercio no tiene eventos cargados aún.</p>
+          </div>
+        ) : (
+          <div className="userbrandprofile-events-list">
+            {events.map(ev => (
+              <button key={ev._id} className="userbrandprofile-event" onClick={() => setSelectedEvent(ev)}>
+                <div className="ube-title">{ev.title}</div>
+                <div className="ube-meta">
+                  <span>{new Date(ev.startDate).toLocaleDateString()} - {new Date(ev.endDate).toLocaleDateString()}</span>
+                  <span> - {ev.hours}</span>
+                </div>
+                <div className="ube-location"><i className="bi bi-geo-alt"></i> {ev.location}</div>
+                <p className="ube-desc">{ev.description}</p>
+              </button>
+            ))}
+          </div>
+        )
+      )}
+      {selectedEvent && (
+        <div className="ube-modal-bg" onClick={() => setSelectedEvent(null)}>
+          <div className="ube-modal" onClick={e => e.stopPropagation()}>
+            <button className="ube-close" aria-label="Cerrar" onClick={() => setSelectedEvent(null)}>
+              <i className="bi bi-x-lg"></i>
+            </button>
+            <h3 className="ube-modal-title">{selectedEvent.title}</h3>
+            <div className="ube-modal-meta">
+              <span>{new Date(selectedEvent.startDate).toLocaleString()} - {new Date(selectedEvent.endDate).toLocaleString()}</span>
+              <span> - {selectedEvent.hours}</span>
+              <span className="ube-location"><i className="bi bi-geo-alt"></i> {selectedEvent.location}</span>
+            </div>
+            <p className="ube-modal-desc">{selectedEvent.description}</p>
+          </div>
         </div>
       )}
     </div>
   );
 }
+

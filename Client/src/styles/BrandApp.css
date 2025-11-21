@@ -4,22 +4,20 @@
     width: 100%;
 }
 
-.brand-nav p {
+.brand-app .brand-nav p {
     font-size: 2em;
     font-weight: 700;
     margin: 0;
 }
 
-.brand-nav {
+.brand-app .brand-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1em;
-    margin-left: 20%;
-    width: 80%;
 }
 
-.brand-nav button {
+.brand-app .brand-nav button {
     background: rgb(9, 9, 9);
     color: white;
     border: none;
@@ -30,21 +28,24 @@
     padding: 0.5em 1em;
 }
 
-.brand-nav button:hover {
+.brand-app .brand-nav button:hover {
     color: #FFB743;
     transition: 0.3s ease;
 }
 
-.main-content {
+.brand-app .main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     height: 100vh;
     background: #faf9f6; /* opcional */
+    margin-left: 20%;
+    width: 80%;
+    overflow-x: hidden;
 
 }
 
-.content {
+.brand-app .content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,6 +53,26 @@
     height: 100%;
     font-size: 2em;
     font-weight: 700;
-    margin-left: 20%;
-    width: 80%;
+}
+
+@media (max-width: 768px) {
+    .brand-app {
+        display: block;
+        height: auto;
+        min-height: 100vh;
+    }
+    .brand-app .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    .brand-app .brand-nav {
+        padding: 1rem;
+    }
+    .brand-app .content {
+        padding: 0 1rem 80px; /* espacio para navbar inferior */
+        font-size: 1rem;
+        font-weight: 400;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
 }

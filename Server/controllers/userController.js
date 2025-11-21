@@ -88,3 +88,38 @@ const auth = async(req, res) => {
 }
 
 export {getAllUsers, createUser, auth};
+
+// Perfil propio
+const getMe = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select('-password');
+        if (!user) return res.status(404).json({ msg: 'Usuario no encontrado' });
+        res.json(user);
+    } catch (error) {
+        return res.status(500).json({ msg: 'Error en el servidor' });
+    }
+};
+
+const updateMe = async (req, res) => {
+    try {
+        const updates = {};
+        const allowed = ['name','lastName','email'];
+        for (const k of allowed) if (req.body[k] !== undefined) updates[k] = req.body[k];
+        if (req.file) {
+            updates.profileImage = `/uploads/users/${req.file.filename}`;
+        }
+        if (req.body.password) {
+            updates.password = await bcrypt.hash(req.body.password, salt);
+        }
+        const user = await User.findByIdAndUpdate(req.userId, updates, { new: true, runValidators: true }).select('-password');
+        if (!user) return res.status(404).json({ msg: 'Usuario no encontrado' });
+        res.json(user);
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).json({ msg: 'El email ya está registrado' });
+        }
+        return res.status(500).json({ msg: 'Error en el servidor' });
+    }
+};
+
+export { getMe, updateMe };

@@ -4,22 +4,20 @@
     width: 100%;
 }
 
-.user-nav p {
+.user-app .user-nav p {
     font-size: 2em;
     font-weight: 700;
     margin: 0;
 }
 
-.user-nav {
+.user-app .user-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1em;
-    margin-left: 20%;
-    width: 80%;
 }
 
-.user-nav button {
+.user-app .user-nav button {
     background: rgb(9, 9, 9);
     color: white;
     border: none;
@@ -30,21 +28,24 @@
     padding: 0.5em 1em;
 }
 
-.user-nav button:hover {
+.user-app .user-nav button:hover {
     color: #FFB743;
     transition: 0.3s ease;
 }
 
-.main-content {
+.user-app .main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     height: 100vh;
     background: #e5e5e5; /* opcional */
+    margin-left: 20%;
+    width: 80%;
+    overflow-x: hidden;
 
 }
 
-.content {
+.user-app .content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,6 +53,27 @@
     height: 100%;
     font-size: 2em;
     font-weight: 700;
-    margin-left: 20%;
-    width: 80%;
+}
+
+/* Mobile adjustments when header becomes bottom navbar */
+@media (max-width: 768px) {
+    .user-app {
+        display: block;
+        height: auto;
+        min-height: 100vh;
+    }
+    .user-app .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    .user-app .user-nav {
+        padding: 1rem;
+    }
+    .user-app .content {
+        padding: 0 1rem 80px; /* leave space for bottom navbar */
+        font-size: 1rem;
+        font-weight: 400;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
 }

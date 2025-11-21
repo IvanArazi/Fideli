@@ -1,0 +1,44 @@
+:root {
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --text: #141417;
+  --muted: #6b7280;
+  --primary: #090909;
+  --accent: #FFB743;
+  --radius: 14px;
+  --shadow: 0 8px 30px rgba(0,0,0,.08);
+}
+
+.profile-page {
+  padding: 1.25rem;
+  max-width: 980px;
+  margin: 0 auto;
+  color: var(--text);
+}
+
+.profile-header { display:flex; align-items:center; gap:.75rem; margin-bottom:1rem; }
+.back-btn { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid #e5e7eb; background:var(--surface); cursor:pointer; }
+.back-btn:hover { border-color: var(--accent); }
+
+.profile-card { background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow); padding:1rem; }
+.avatar { display:flex; align-items:center; justify-content:center; margin-bottom: 1rem; }
+.avatar img, .avatar-empty { width:96px; height:96px; border-radius:50%; background:#e5e7eb; object-fit:cover; display:block; border:2px solid #fff; box-shadow:0 1px 6px rgba(0,0,0,.06); }
+.profile-form { display:grid; gap:1rem; }
+.field { display:grid; gap:.35rem; }
+.field span { font-size:.9rem; color:var(--muted); }
+.field input, .field textarea { width:100%; border:1px solid #e5e7eb; border-radius:12px; padding:.75rem .9rem; font-size:1rem; background:#fafafa; }
+.field textarea { min-height:96px; resize:vertical; }
+.field input:focus, .field textarea:focus { outline:none; border-color:var(--accent); background:#fff; }
+
+.profile-actions { display:flex; gap:.75rem; flex-wrap:wrap; margin-top:.5rem; }
+.btn { appearance:none; border:none; cursor:pointer; border-radius:12px; padding:.7rem 1rem; font-weight:600; }
+.btn-primary { background:var(--primary); color:#fff; }
+.btn-primary:hover { filter:brightness(1.05); }
+.btn-outline { background:transparent; border:1.5px solid #d1d5db; color:var(--text); }
+.btn-outline:hover { border-color:var(--accent); color:var(--primary); }
+
+@media (min-width: 768px) {
+  .profile-card { padding: 1.25rem 1.5rem; }
+  .profile-form { grid-template-columns: 1fr 1fr; }
+  .profile-actions { grid-column: 1 / -1; }
+}
