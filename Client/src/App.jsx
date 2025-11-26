@@ -14,6 +14,7 @@ import ExploreEvents from "./pages/ExploreEvents";
 import UserProfile from "./pages/UserProfile";
 import BrandProfile from "./pages/BrandProfile";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Explore from "./components/Explore";
 
 function App() {
   return (
@@ -95,6 +96,13 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["user", "admin"]}>
               <ExploreAwards />
+            </ProtectedRoute>
+          }
+        />        <Route
+          path="/user/map"
+          element={
+            <ProtectedRoute allowedRoles={["user", "admin"]}>
+              <Explore />
             </ProtectedRoute>
           }
         />        <Route

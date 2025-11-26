@@ -30,7 +30,7 @@ Plataforma de fidelización para comercios gastronómicos (stack MERN). Los usua
 
 ## Modelos (MongoDB/Mongoose) y Endpoints
 - user: `name,lastName,email(unique),password,uniqueNumber,role`. Endpoints: `GET/POST /api/users`, `POST /api/users/auth`.
-- brand: `name,email,password,phone,description,address,manager,category[],status,role,profileImage`. Endpoints: `GET /api/brands`, filtros (`/pending|/approved|/rejected`), `GET /categoryId/:id`, `POST /` (con imagen), `POST /auth`, `GET /:id`.
+- brand: `name,email,password,phone,description,addresses[],locations[],manager,category[],status,role,profileImage`. Endpoints: `GET /api/brands`, filtros (`/pending|/approved|/rejected`), `GET /categoryId/:id`, `POST /` (con imagen), `POST /auth`, `GET /:id`.
 - category: `name,image`. Endpoints: `GET /api/categories`, `POST /` (admin + upload), `DELETE /:id` (admin).
 - award: `name,brand,description,requiredPoints,image`. Endpoints: `GET /api/awards`, `GET /brand/:brand`, `GET /:id`, `POST /` (brand + upload), `PUT/DELETE /:id` (brand).
 - point: `points,userId,brandId`. Endpoints: `GET /api/points` + `GET /user/:id`, `GET /brand/:id`, `GET /user/:user/brand/:brand`, `POST /acumulate` (brand).

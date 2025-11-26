@@ -30,11 +30,26 @@ const mySchema = new Schema({
         required: [true, "La descripción del comercio es obligatoria"],
         trim: true,
     },
-    address: {
-        type: String,
-        required: [true, "La dirección del comercio es obligatoria"],
-        trim: true,
+    addresses: {
+        type: [{ type: String, trim: true }],
+        validate: {
+            validator: function (v) {
+                if (v == null) return true; // permitir nulo en documentos antiguos
+                return Array.isArray(v) && v.filter(s => typeof s === 'string' && s.trim().length > 0).length > 0;
+            },
+            message: 'Debe ingresar al menos una dirección'
+        }
     },
+    // Campo legacy para compatibilidad de lectura de documentos antiguos
+    address: { type: String, trim: true },
+    locations: [{
+        formattedAddress: { type: String, trim: true, required: true },
+        lat: { type: Number, required: true },
+        lng: { type: Number, required: true },
+        provider: { type: String, trim: true, default: 'geoapify' },
+        placeId: { type: String, trim: true },
+        verifiedAt: { type: Date, default: Date.now }
+    }],
     manager: {
         type: String,
         required: [true, "El nombre del encargado es obligatorio"],

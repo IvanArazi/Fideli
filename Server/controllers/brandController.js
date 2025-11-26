@@ -76,10 +76,46 @@ const createBrand = async (req, res) => {
             req.body.profileImage = `/uploads/brands/${req.file.filename}`;
         }
 
-        const brand = new Brand(req.body);
-        if (!brand.name || !brand.email || !brand.password || !brand.phone || !brand.description || !brand.address || !brand.manager || !brand.category || !req.file) {
+        // Enfoque validado: requerir `locations` seleccionadas del autocomplete
+        let locations = req.body.locations;
+        if (typeof locations === 'string') {
+            try {
+                const parsed = JSON.parse(locations);
+                if (Array.isArray(parsed)) locations = parsed;
+            } catch (_) {
+                return res.status(400).json({ msg: 'Formato de locations inválido' });
+            }
+        }
+        if (!Array.isArray(locations) || locations.length === 0) {
+            return res.status(403).json({ msg: 'Debe seleccionar al menos una dirección válida' });
+        }
+        // Validar shape mínima
+        const sanitizedLocations = locations
+            .map(l => ({
+                formattedAddress: (l.formattedAddress || l.text || '').toString().trim(),
+                lat: Number(l.lat),
+                lng: Number(l.lng),
+                provider: (l.provider || 'geoapify').toString().trim(),
+                placeId: (l.placeId || '').toString().trim(),
+            }))
+            .filter(l => l.formattedAddress && Number.isFinite(l.lat) && Number.isFinite(l.lng));
+        if (sanitizedLocations.length === 0) {
+            return res.status(403).json({ msg: 'Las direcciones seleccionadas no son válidas' });
+        }
+        const addresses = sanitizedLocations.map(l => l.formattedAddress);
+
+        // Validaciones mínimas de campos requeridos
+        const requiredOk = req.body.name && req.body.email && req.body.password && req.body.phone && req.body.description && req.body.manager && req.body.category && req.file;
+        if (!requiredOk) {
             return res.status(403).json({msg: "Debe completar todos los campos"});
         }
+
+        // Construir documento normalizado
+        const payload = { ...req.body, addresses, locations: sanitizedLocations };
+        delete payload.address; // legacy
+        delete payload.locations; // prevenimos inyección de campos no saneados
+
+        const brand = new Brand(payload);
 
         const passwordHash = await bcrypt.hash(brand.password, salt);
         brand.password = passwordHash;
@@ -138,11 +174,54 @@ const getMe = async (req, res) => {
 
 const updateMe = async (req, res) => {
     try {
+        // Enforce that brand exists and check current locations state
+        const current = await Brand.findById(req.brandId).select('locations');
+        if (!current) return res.status(404).json({ msg: 'Comercio no encontrado' });
         const updates = {};
-        const allowed = ['name','email','phone','description','address','manager','category','status'];
+        const allowed = ['name','email','phone','description','manager','category','status'];
         for (const k of allowed) if (req.body[k] !== undefined) updates[k] = req.body[k];
         if (req.file) {
             updates.profileImage = `/uploads/brands/${req.file.filename}`;
+        }
+        // No permitir actualizar 'addresses' sin 'locations' válidas
+        if (req.body.addresses !== undefined && req.body.locations === undefined) {
+            return res.status(403).json({ msg: 'Debe seleccionar direcciones válidas desde el buscador' });
+        }
+        // Normalizar locations validadas del autocomplete (obligatorio si se envía)
+        let locations = req.body.locations;
+        if (locations !== undefined) {
+            if (typeof locations === 'string') {
+                try {
+                    const parsed = JSON.parse(locations);
+                    locations = parsed;
+                } catch (_) {
+                    return res.status(400).json({ msg: 'Formato de locations inválido' });
+                }
+            }
+            if (!Array.isArray(locations) || locations.length === 0) {
+                return res.status(403).json({ msg: 'Debe enviar al menos una dirección válida' });
+            }
+            const sanitized = locations
+                .map(l => ({
+                    formattedAddress: (l.formattedAddress || l.text || '').toString().trim(),
+                    lat: Number(l.lat),
+                    lng: Number(l.lng),
+                    provider: (l.provider || 'geoapify').toString().trim(),
+                    placeId: (l.placeId || '').toString().trim(),
+                }))
+                .filter(l => l.formattedAddress && Number.isFinite(l.lat) && Number.isFinite(l.lng));
+            if (sanitized.length === 0) {
+                return res.status(403).json({ msg: 'Las direcciones seleccionadas no son válidas' });
+            }
+            updates.locations = sanitized;
+            updates.addresses = sanitized.map(l => l.formattedAddress);
+        }
+        // Si no envía nuevas locations y actualmente no tiene ninguna, exigir al menos una
+        if (updates.locations === undefined) {
+            const hasCurrent = Array.isArray(current.locations) && current.locations.length > 0;
+            if (!hasCurrent) {
+                return res.status(403).json({ msg: 'Debe mantener al menos una dirección válida en el perfil' });
+            }
         }
         if (req.body.password) {
             const hash = await bcrypt.hash(req.body.password, salt);

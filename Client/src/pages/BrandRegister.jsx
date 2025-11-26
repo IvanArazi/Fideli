@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/BrandRegister.css";
 import logo from "../assets/logo.png";
+import AddressAutocomplete from "../components/AddressAutocomplete";
 
 export default function BrandRegisterWizard() {
   const [step, setStep] = useState(1);
@@ -13,10 +14,11 @@ export default function BrandRegisterWizard() {
     manager: "",
     phone: "",
     description: "",
-    address: "",
     category: "",
     profileImage: null,
   });
+  const [addresses, setAddresses] = useState([""]); // visible text inputs
+  const [locations, setLocations] = useState([null]); // meta seleccionada por cada input
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -46,6 +48,22 @@ export default function BrandRegisterWizard() {
     }
   };
 
+  const handleAddressChange = (idx, value) => {
+    const next = [...addresses];
+    next[idx] = value;
+    // si se completa la última, agregamos un nuevo input opcional
+    if (idx === addresses.length - 1 && value.trim().length > 0) {
+      next.push("");
+      setLocations(prev => [...prev, null]);
+    }
+    setAddresses(next);
+    setLocations(prev => {
+      const arr = [...prev];
+      arr[idx] = null; // si se modificó a mano, invalida selección anterior
+      return arr;
+    });
+  };
+
   const nextStep = () => {
     if (step === 1 && (!form.name || !form.email || !form.password || !form.confirmPassword)) {
       setError("Completá todos los campos");
@@ -66,7 +84,17 @@ export default function BrandRegisterWizard() {
 
 const handleSubmit = async e => {
   e.preventDefault();
-  if (!form.manager || !form.phone || !form.description || !form.address || !form.category || !form.profileImage) {
+  const trimmedAddresses = addresses.map(a => a.trim());
+  // Validar: por cada input con texto no vacío debe existir selección
+  for (let i = 0; i < trimmedAddresses.length; i++) {
+    if (trimmedAddresses[i] && !locations[i]) {
+      setError("Hay direcciones sin validar. Seleccioná cada una desde la lista.");
+      return;
+    }
+  }
+  const cleanedAddresses = trimmedAddresses.filter(Boolean);
+  const cleanedLocations = locations.filter(Boolean);
+  if (!form.manager || !form.phone || !form.description || cleanedAddresses.length === 0 || cleanedLocations.length === 0 || !form.category || !form.profileImage) {
     setError("Completá todos los campos y adjuntá una imagen");
     return;
   }
@@ -78,7 +106,9 @@ const handleSubmit = async e => {
     body.append("manager", form.manager);
     body.append("phone", form.phone);
     body.append("description", form.description);
-    body.append("address", form.address);
+    // Enviar direcciones formateadas y locations validadas
+    body.append("addresses", JSON.stringify(cleanedLocations.map(l => l.formattedAddress)));
+    body.append("locations", JSON.stringify(cleanedLocations));
     body.append("category", form.category);
     body.append("profileImage", form.profileImage);
 
@@ -130,7 +160,25 @@ const handleSubmit = async e => {
               ))}
             </select>
             <input name="manager" placeholder="Nombre del dueño" value={form.manager} onChange={handleChange} required />
-            <input name="address" placeholder="Ubicación" value={form.address} onChange={handleChange} required />
+            <div className="addresses-group">
+              {addresses.map((addr, idx) => (
+                <div key={idx} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  <AddressAutocomplete
+                    value={addr}
+                    onChange={(v) => handleAddressChange(idx, v)}
+                    onPick={(sel) => setLocations(prev => { const arr=[...prev]; arr[idx]=sel; return arr; })}
+                    required={idx === 0}
+                    placeholder={`Dirección ${idx + 1}${idx === 0 ? '' : ' (opcional)'}`}
+                  />
+                  {idx > 0 && idx < addresses.length && (
+                    <button type="button" className="btn btn-sm btn-outline-danger" onClick={() => {
+                      setAddresses(prev => prev.filter((_,i)=>i!==idx))
+                      setLocations(prev => prev.filter((_,i)=>i!==idx))
+                    }}>Eliminar</button>
+                  )}
+                </div>
+              ))}
+            </div>
             <input name="phone" placeholder="Teléfono" value={form.phone} onChange={handleChange} required />
             <textarea name="description" placeholder="Descripción" value={form.description} onChange={handleChange} required />
             <label htmlFor="">Adjuntar imagen de perfil</label>
